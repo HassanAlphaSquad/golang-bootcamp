@@ -13,4 +13,4 @@ func main() {
 	fmt.Println("1585750374 converted to a tinytime is:", tt)
 }
 
-// go mod init github.com/HassanAlphaSquad/golang-bootcamp/tree/main/dataset
+// go mod init github.com/HassanAlphaSquad/golang-bootcamp/tree/main/datetest
