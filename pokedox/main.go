@@ -18,7 +18,8 @@ type LocationAreaResponse struct {
 	Results []struct {
 		Name string `json:"name"`
 	} `json:"results"`
-	Config
+	Next     *string `json:"next"`
+	Previous *string `json:"previous"`
 }
 
 type cliCommand struct {
@@ -64,12 +65,14 @@ func FetchLocationAreas(url string) (*LocationAreaResponse, error) {
 }
 
 func commandMap(config *Config) error {
-	if config.Next == nil {
-		fmt.Println("No more location areas available.")
-		return nil
+	url := ""
+	if config.Next != nil {
+		url = *config.Next
+	} else {
+		url = "https://pokeapi.co/api/v2/location-area/"
 	}
 
-	locationAreas, err := FetchLocationAreas(*config.Next)
+	locationAreas, err := FetchLocationAreas(url)
 	if err != nil {
 		return err
 	}
@@ -78,8 +81,8 @@ func commandMap(config *Config) error {
 		fmt.Println(area.Name)
 	}
 
-	config.Next = locationAreas.Config.Next
-	config.Previous = locationAreas.Config.Previous
+	config.Next = locationAreas.Next
+	config.Previous = locationAreas.Previous
 	return nil
 }
 
@@ -98,15 +101,14 @@ func commandMapBack(config *Config) error {
 		fmt.Println(area.Name)
 	}
 
-	config.Next = locationAreas.Config.Next
-	config.Previous = locationAreas.Config.Previous
+	config.Next = locationAreas.Next
+	config.Previous = locationAreas.Previous
 	return nil
 }
 
 var commandRegistry map[string]cliCommand
 
 func init() {
-
 	commandRegistry = map[string]cliCommand{
 		"exit": {
 			name:        "exit",
@@ -132,9 +134,9 @@ func init() {
 }
 
 func main() {
-	config := &Config{}
-
-	config.Next = getDefaultLocationAreaURL()
+	config := &Config{
+		Next: getDefaultLocationAreaURL(),
+	}
 
 	scanner := bufio.NewScanner(os.Stdin)
 
