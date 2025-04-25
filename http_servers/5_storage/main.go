@@ -1,7 +1,21 @@
 package main
 
-import "fmt"
+import (
+	"database/sql"
+	"os"
+
+	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
+)
 
 func main() {
-	fmt.Println("Hello, Storage")
+	godotenv.Load()
+	dbUrl := os.Getenv("DB_URL")
+	_, err := sql.Open("postgres", dbUrl)
+	if err != nil {
+		panic(err)
+	}
+	// dbQueries := database.New(db)
+	// defer db.Close()
+
 }
