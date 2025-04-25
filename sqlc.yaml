@@ -1,0 +1,10 @@
+version: "2"
+sql:
+  - engine: "postgresql"
+    schema: "sql/schema"
+    queries: "sql/queries"
+    database:
+      uri: "postgres://youruser:yourpassword@localhost:5432/yourdb?sslmode=disable"
+    codegen:
+      out: "internal/database"
+      package: "database"

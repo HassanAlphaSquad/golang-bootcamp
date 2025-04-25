@@ -1,7 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"database/sql"
+	"fmt"
+	"os"
+
+	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
+)
 
 func main() {
-	fmt.Println("test")
+	fmt.Println("Welcome to Golang Bootcamp!")
+
+	godotenv.Load()
+	dbUrl := os.Getenv("DB_URL")
+	_, err := sql.Open("postgres", dbUrl)
+	if err != nil {
+		panic(err)
+	}
+	// dbQueries := database.New(db)
 }
