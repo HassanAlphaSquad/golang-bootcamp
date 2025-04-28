@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -18,4 +19,5 @@ func main() {
 	// dbQueries := database.New(db)
 	// defer db.Close()
 
+	fmt.Println("Hello,  Storage")
 }
