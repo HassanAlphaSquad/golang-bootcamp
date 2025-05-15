@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// the Task structure
 type Task struct {
 	ID   int
 	Name string
