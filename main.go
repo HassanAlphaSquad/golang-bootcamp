@@ -19,4 +19,8 @@ func main() {
 		panic(err)
 	}
 	// dbQueries := database.New(db)
+	age:=20
+	if age>=18 {
+		fmt.Printf("Yes, you are eligible for casting vote")
+	}
 }
